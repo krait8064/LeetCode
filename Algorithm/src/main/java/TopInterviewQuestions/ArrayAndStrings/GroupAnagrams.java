@@ -18,10 +18,12 @@ public class GroupAnagrams {
             key = sortKeyChars(arg);
             if (sortedKeyValues.containsKey(key)) {
                 values = sortedKeyValues.get(key);
+                values.add(arg);
             } else {
                 values = new ArrayList<>();
+                values.add(arg);
+                sortedKeyValues.put(key, values);
             }
-            values.add(arg);
         }
         return new ArrayList<>(sortedKeyValues.values());
     }
