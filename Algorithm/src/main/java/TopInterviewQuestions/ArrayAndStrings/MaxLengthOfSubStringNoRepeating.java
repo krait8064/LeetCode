@@ -2,11 +2,10 @@ package TopInterviewQuestions.ArrayAndStrings;
 
 import java.util.*;
 
-public class MaxLengthOfSubStringNoRepeating {
-    public static void main(String[] args) {
-        String test = "helloworld";
+import org.junit.Assert;
+import org.junit.Test;
 
-    }
+public class MaxLengthOfSubStringNoRepeating {
 
     public static int maxSubstringLength1(String str) {
         if (str == null)
@@ -18,12 +17,20 @@ public class MaxLengthOfSubStringNoRepeating {
         Character ch;
         int max = -1;
         for (int i = 0; i < len; i++) {
-            ch = str.charAt(i);
-            if (container.contains(ch) || i == len - 1) {
-                max = container.size();
-                container.clear();
-            } else {
-                container.add(ch);
+            for (int j = i; j < len; j++) {
+                ch = str.charAt(j);
+                if (!container.contains(ch)) {
+                    container.add(ch);
+                }else {
+                    max = Math.max(container.size(), max);
+                    container.clear();
+                    break;
+                }
+                if (j == len - 1) {
+                    max = Math.max(container.size(), max);
+                    container.clear();
+                    break;
+                }
             }
         }
         return max;
@@ -67,4 +74,12 @@ public class MaxLengthOfSubStringNoRepeating {
         }
         return max;
     }
+
+    @Test
+    public void testCase(){
+        Assert.assertEquals(5,maxSubstringLength1("helloworld"));
+        Assert.assertEquals(1,maxSubstringLength1("bbbbb"));
+        Assert.assertEquals(3,maxSubstringLength1("pwwkew"));
+    }
+
 }
