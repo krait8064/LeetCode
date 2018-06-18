@@ -21,7 +21,7 @@ public class MaxLengthOfSubStringNoRepeating {
                 ch = str.charAt(j);
                 if (!container.contains(ch)) {
                     container.add(ch);
-                }else {
+                } else {
                     max = Math.max(container.size(), max);
                     container.clear();
                     break;
@@ -76,10 +76,35 @@ public class MaxLengthOfSubStringNoRepeating {
     }
 
     @Test
-    public void testCase(){
-        Assert.assertEquals(5,maxSubstringLength1("helloworld"));
-        Assert.assertEquals(1,maxSubstringLength1("bbbbb"));
-        Assert.assertEquals(3,maxSubstringLength1("pwwkew"));
+    public void testCase1() {
+        Assert.assertEquals(5, maxSubstringLength1("helloworld"));
+        Assert.assertEquals(1, maxSubstringLength1("bbbbb"));
+        Assert.assertEquals(3, maxSubstringLength1("pwwkew"));
+    }
+
+    @Test
+    public void testCase2() {
+        Assert.assertEquals(5, maxSubstringLength2("helloworld"));
+        Assert.assertEquals(1, maxSubstringLength2("bbbbb"));
+        Assert.assertEquals(3, maxSubstringLength2("pwwkew"));
+    }
+
+    public static int maxSubstringLength2(String str) {
+        if (str == null)
+            throw new IllegalArgumentException("method:maxSubstringLength(String str) argument str null");
+        int len = str.length();
+        if (len == 1)
+            return 1;
+        Map<Character, Integer> charIndexMap = new HashMap<>();
+        int max = 0;
+        for (int i = 0, j = 0; i < str.length(); i++) {
+            if (charIndexMap.containsKey(str.charAt(i))) {
+                j = Math.max(j, charIndexMap.get(str.charAt(i)) + 1);
+            }
+            charIndexMap.put(str.charAt(i), i);
+            max = Math.max(max, i - j + 1);
+        }
+        return max;
     }
 
 }
