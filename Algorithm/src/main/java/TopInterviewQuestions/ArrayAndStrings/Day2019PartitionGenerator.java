@@ -1,32 +1,29 @@
 package TopInterviewQuestions.ArrayAndStrings;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class Day2019PartitionGenerator {
+    public static final String FORMAT = "PARTITION p%d VALUES LESS THAN (%d) ENGINE=InnoDB,";
+
     public static void main(String[] args) {
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+        int bound = Integer.parseInt(args[0]);
+        String startDate = args[1];
+        String format = args[2];
+        SimpleDateFormat df = new SimpleDateFormat(format);
         try {
-            c.setTime(df.parse("20190101"));
+            c.setTime(df.parse(startDate));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        int bound = 365;
         for (int i = 0; i < bound; i++) {
-            if (valid(c.get(Calendar.MONTH), c.get(Calendar.DATE))) {
-                String ym = df.format(c.getTime()) + ",";
-                System.out.print(ym);
-            }
+            int ymd = Integer.parseInt(df.format(c.getTime()));
+            System.out.println(String.format(FORMAT, ymd, ymd + 1));
             c.add(Calendar.DATE, 1);
         }
 
     }
 
-    private static boolean valid(int month, int day) {
-        return !(month == 1 && day >= 4 && day <= 7);
-    }
 }
