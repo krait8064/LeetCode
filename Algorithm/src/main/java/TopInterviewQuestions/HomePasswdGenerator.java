@@ -9,7 +9,7 @@ public class HomePasswdGenerator {
     private static Random random = new Random();
 
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(generate(10,6)));
+        System.out.println(Arrays.toString(generate(10,8)));
     }
 
     public static int[] generate(int bound, int bits) {
